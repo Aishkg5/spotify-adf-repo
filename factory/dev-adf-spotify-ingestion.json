@@ -1,0 +1,9 @@
+{
+	"name": "dev-adf-spotify-ingestion",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6e7a978e-d05c-4e06-a2a8-0841860adf23",
+		"tenantId": "0fc8a057-8abc-41da-8107-634959075991"
+	}
+}
