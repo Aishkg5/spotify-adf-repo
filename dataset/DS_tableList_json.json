@@ -1,0 +1,33 @@
+{
+	"name": "DS_tableList_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ADLS_sink",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_ds_container": {
+				"type": "string"
+			},
+			"p_ds_file": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().p_ds_file",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().p_ds_container",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {}
+	}
+}
