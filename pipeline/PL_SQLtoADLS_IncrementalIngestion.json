@@ -78,7 +78,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "select * from @{item().schema}.@{item().table} where @{item().cdc_col} >= '@{if(empty(item().from_date),if(empty(item().cdc_latest_value),item().cdc_init_value,item().cdc_latest_value),item().from_date)} ' and @{item().cdc_col} <= ' @{if(empty(item().to_date),utcNow(),item().to_date)}'",
+										"value": "select * from @{item().schema}.@{item().table} where @{item().cdc_col} >= '@{if(empty(item().from_date),if(empty(item().cdc_latest_value),item().cdc_init_value,item().cdc_latest_value),item().from_date)} ' && @{item().cdc_col} <= ' @{if(empty(item().to_date),utcNow(),item().to_date)}'",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -114,6 +114,10 @@
 									"referenceName": "DS_adls_parquet",
 									"type": "DatasetReference",
 									"parameters": {
+										"p_ds_container": {
+											"value": "@pipeline().parameters.p_pl_sink_container",
+											"type": "Expression"
+										},
 										"p_ds_folder": {
 											"value": "@item().table",
 											"type": "Expression"
@@ -125,6 +129,80 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "latest",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "maxScript",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "cdc_latest_value",
+								"value": ""
+							}
+						},
+						{
+							"name": "lastrun",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Copy data1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "last_run",
+								"value": {
+									"value": "utcNow()",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "maxScript",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "ls_SQLDB_spotify_source",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "select @{max(item().updated_at)} from @{item().schema}.@{item().table}",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
 					]
 				}
@@ -146,6 +224,12 @@
 		},
 		"variables": {
 			"current": {
+				"type": "String"
+			},
+			"cdc_latest_value": {
+				"type": "String"
+			},
+			"last_run": {
 				"type": "String"
 			}
 		},
