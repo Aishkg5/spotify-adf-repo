@@ -77,15 +77,52 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "select * from @{item().schema}.@{item().table} where @{item().cdc_col} >= '@{if(empty(item().from_date),if(empty(item().cdc_latest_value),item().cdc_init_value,item().cdc_latest_value),item().from_date)} ' and @{item().cdc_col} <= ' @{if(empty(item().to_date),utcNow(),item().to_date)}'",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "DS_RawSpotifyData",
 									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_adls_parquet",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_ds_folder": {
+											"value": "@item().table",
+											"type": "Expression"
+										},
+										"p_ds_file": {
+											"value": "@concat(item().table,'_',utcNow())",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
