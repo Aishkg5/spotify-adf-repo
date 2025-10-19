@@ -138,6 +138,10 @@
 			"p_pl_file": {
 				"type": "string",
 				"defaultValue": "tableNames.json"
+			},
+			"p_pl_sink_container": {
+				"type": "string",
+				"defaultValue": "bronze"
 			}
 		},
 		"variables": {
