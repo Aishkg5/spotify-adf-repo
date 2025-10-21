@@ -5,12 +5,27 @@
 			"referenceName": "ls_ADLS_sink",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"file": {
+				"type": "string"
+			},
+			"container": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "config"
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().container",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -44,19 +44,45 @@
 						"referenceName": "DS_tableList_json",
 						"type": "DatasetReference",
 						"parameters": {
-							"p_ds_container": "config",
-							"p_ds_file": "tableNames.json"
+							"p_ds_container": {
+								"value": "@pipeline().parameters.p_container",
+								"type": "Expression"
+							},
+							"p_ds_file": {
+								"value": "@pipeline().parameters.p_file",
+								"type": "Expression"
+							}
 						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "csv",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"file": {
+								"value": "@replace(pipeline().parameters.p_file,'json','csv')",
+								"type": "Expression"
+							},
+							"container": {
+								"value": "@pipeline().parameters.p_container",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"p_container": {
+				"type": "string",
+				"defaultValue": "config"
+			},
+			"p_file": {
+				"type": "string",
+				"defaultValue": "tableNames.json"
+			}
+		},
 		"annotations": []
 	}
 }

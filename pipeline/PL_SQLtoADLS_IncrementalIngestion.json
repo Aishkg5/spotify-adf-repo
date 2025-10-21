@@ -16,29 +16,19 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "JsonSource",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
-							"type": "JsonReadSettings"
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"dataset": {
-						"referenceName": "DS_tableList_json",
-						"type": "DatasetReference",
-						"parameters": {
-							"p_ds_container": {
-								"value": "@pipeline().parameters.p_pl_container",
-								"type": "Expression"
-							},
-							"p_ds_file": {
-								"value": "@pipeline().parameters.p_pl_file",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "csv",
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -46,6 +36,8 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "01-tableList-lookup",
