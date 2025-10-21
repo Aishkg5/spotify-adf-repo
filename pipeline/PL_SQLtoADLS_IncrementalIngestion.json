@@ -28,7 +28,13 @@
 					},
 					"dataset": {
 						"referenceName": "csv",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"file": {
+								"value": "@pipeline().parameters.p_pl_file",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
