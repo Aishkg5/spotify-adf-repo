@@ -215,7 +215,7 @@
 			},
 			"p_pl_file": {
 				"type": "string",
-				"defaultValue": "tableNames.json"
+				"defaultValue": "tableNames.csv"
 			},
 			"p_pl_sink_container": {
 				"type": "string",
