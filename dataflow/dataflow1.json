@@ -34,6 +34,9 @@
 				},
 				{
 					"name": "aggregate1"
+				},
+				{
+					"name": "alterRow1"
 				}
 			],
 			"scriptLines": [
@@ -56,13 +59,14 @@
 				"     validateSchema: false,",
 				"     format: 'table',",
 				"     store: 'sqlserver',",
-				"     schemaName: ($schema),",
-				"     tableName: ($table),",
+				"     schemaName: 'dbo',",
+				"     tableName: 'DimUser',",
 				"     isolationLevel: 'READ_UNCOMMITTED') ~> source2",
 				"source1 derive(last_run = currentUTC(),",
-				"          cdc_latest_value = $parameter1) ~> derivedColumn1",
+				"          cdc_latest_value = ERROR_FUNCTION('')) ~> derivedColumn1",
 				"source2 aggregate() ~> aggregate1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 alterRow() ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'delimited',",
 				"     fileSystem: 'config',",
