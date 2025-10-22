@@ -34,6 +34,10 @@
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     schema as string (@{item().schema}),",
+				"     table as string (@{item().table})",
+				"}",
 				"source(useSchema: false,",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
