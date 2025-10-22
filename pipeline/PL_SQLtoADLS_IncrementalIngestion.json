@@ -78,7 +78,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "select * from @{item().schema}.@{item().table} where @{item().cdc_col} >= '@{if(empty(item().from_date),if(empty(item().cdc_latest_value),item().cdc_init_value,item().cdc_latest_value),item().from_date)} ' && @{item().cdc_col} <= ' @{if(empty(item().to_date),utcNow(),item().to_date)}'",
+										"value": "select * from @{item().schema}.@{item().table} where @{item().cdc_col} >= '@{if(empty(item().from_date),if(empty(item().cdc_latest_value),item().cdc_init_value,item().cdc_latest_value),item().from_date)}' and @{item().cdc_col} <= '@{if(empty(item().to_date),utcNow(),item().to_date)}'",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
