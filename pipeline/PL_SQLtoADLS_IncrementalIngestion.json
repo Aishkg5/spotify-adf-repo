@@ -224,17 +224,7 @@
 							"typeProperties": {
 								"dataflow": {
 									"referenceName": "dataflow1",
-									"type": "DataFlowReference",
-									"parameters": {
-										"schema": {
-											"value": "'@{item().schema}'",
-											"type": "Expression"
-										},
-										"table": {
-											"value": "'@{item().table}'",
-											"type": "Expression"
-										}
-									}
+									"type": "DataFlowReference"
 								},
 								"compute": {
 									"coreCount": 8,

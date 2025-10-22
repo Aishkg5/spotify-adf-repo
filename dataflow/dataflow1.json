@@ -40,10 +40,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     schema as string,",
-				"     table as string",
-				"}",
 				"source(useSchema: false,",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
