@@ -41,7 +41,7 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     cdc as string (toString('updated_at'))",
+				"     cdc as string",
 				"}",
 				"source(useSchema: false,",
 				"     allowSchemaDrift: true,",
