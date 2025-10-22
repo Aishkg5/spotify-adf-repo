@@ -33,6 +33,10 @@
 							"file": {
 								"value": "@pipeline().parameters.p_pl_file",
 								"type": "Expression"
+							},
+							"container": {
+								"value": "@pipeline().parameters.p_pl_container",
+								"type": "Expression"
 							}
 						}
 					},
@@ -42,8 +46,6 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "01-tableList-lookup",
