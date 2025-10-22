@@ -10,6 +10,13 @@
 						"type": "LinkedServiceReference"
 					},
 					"name": "source1"
+				},
+				{
+					"linkedService": {
+						"referenceName": "ls_SQLDB_spotify_source",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -27,9 +34,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     parameter1 as string",
-				"}",
 				"source(useSchema: false,",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -41,6 +45,13 @@
 				"     escapeChar: '\\\\',",
 				"     quoteChar: '\\\"',",
 				"     columnNamesAsHeader: true) ~> source1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table',",
+				"     store: 'sqlserver',",
+				"     schemaName: '',",
+				"     tableName: '',",
+				"     isolationLevel: 'READ_UNCOMMITTED') ~> source2",
 				"source1 derive(last_run = currentUTC(),",
 				"          cdc_latest_value = $parameter1) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
