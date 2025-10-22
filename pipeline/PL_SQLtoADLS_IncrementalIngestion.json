@@ -226,10 +226,6 @@
 									"referenceName": "dataflow1",
 									"type": "DataFlowReference",
 									"parameters": {
-										"cdc": {
-											"value": "'select @{max(item().updated_at)} from @{item().schema}.@{item().table}'",
-											"type": "Expression"
-										},
 										"schema": {
 											"value": "'@{item().schema}'",
 											"type": "Expression"

@@ -47,7 +47,6 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     cdc as string (''),",
 				"     schema as string,",
 				"     table as string",
 				"}",
