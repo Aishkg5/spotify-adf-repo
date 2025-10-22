@@ -63,7 +63,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED') ~> source2",
 				"source1 derive(last_run = currentUTC(),",
 				"          cdc_latest_value = ERROR_FUNCTION('')) ~> derivedColumn1",
-				"source2 aggregate(updated_at = max($cdc)) ~> aggregate1",
+				"source2 aggregate() ~> aggregate1",
 				"derivedColumn1 alterRow() ~> alterRow1",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
