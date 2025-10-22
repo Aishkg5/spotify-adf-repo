@@ -31,12 +31,15 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
 				"parameters{",
-				"     schema as string (@{item().schema}),",
-				"     table as string (@{item().table})",
+				"     schema as string,",
+				"     table as string",
 				"}",
 				"source(useSchema: false,",
 				"     allowSchemaDrift: true,",
@@ -53,11 +56,12 @@
 				"     validateSchema: false,",
 				"     format: 'table',",
 				"     store: 'sqlserver',",
-				"     schemaName: (@item().schema),",
-				"     tableName: (@item().table),",
+				"     schemaName: ($schema),",
+				"     tableName: ($table),",
 				"     isolationLevel: 'READ_UNCOMMITTED') ~> source2",
 				"source1 derive(last_run = currentUTC(),",
 				"          cdc_latest_value = $parameter1) ~> derivedColumn1",
+				"source2 aggregate() ~> aggregate1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'delimited',",
