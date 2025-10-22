@@ -131,6 +131,8 @@
 						{
 							"name": "latest",
 							"type": "SetVariable",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "maxScript",
@@ -152,6 +154,8 @@
 						{
 							"name": "lastrun",
 							"type": "SetVariable",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1",
@@ -176,6 +180,8 @@
 						{
 							"name": "maxScript",
 							"type": "Script",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
@@ -208,6 +214,12 @@
 							"dependsOn": [
 								{
 									"activity": "latest",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "Copy data1",
 									"dependencyConditions": [
 										"Succeeded"
 									]
